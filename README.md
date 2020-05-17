@@ -39,16 +39,20 @@ Commit your code regularly and use descriptive messages. This helps both you (in
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [x] What is the purpose of using _sessions_?
-	- Sessions is used to keep track of who is logged in. It runs server-side and sends a cookie to the client which is used an an identifier.
+	- Sessions is used to keep track of who is logged in.
+	It runs server-side and sends a cookie to the client which is used an an identifier.
 
 - [x] What does bcrypt do to help us store passwords in a secure manner.
 	- bcrypt passes the password through a _hashing_ function. A hash is designed to be a one-way process thus securing the password
 
 - [x] What does bcrypt do to slow down attackers?
-	- bcrypt adds a random _salt_ onto the password which ensures the same password will return a different hash. bcrypt also hashes the password multiple times (2^n : usually around 12) to massively slow down the rate a hacker can generate an equal hash.
+	- bcrypt adds a random _salt_ onto the password which ensures the same password will return a different hash.
+	bcrypt also hashes the password multiple times (2^n : usually around 12) to massively slow down the rate a hacker can generate an equal hash.
 
 - [x] What are the three parts of the JSON Web Token?
-	- 1. header; this stores metadata about the token (such as hash type and length). 2. payload; this is the actual data being sent, usually the userId and username. 3. Signature; this is used to verify that the token has not been changed. It is a hash of the header + payload + a secret key.
+	1. header; this stores metadata about the token (such as hash type and length).
+	2. payload; this is the actual data being sent, usually the userId and username.
+	3. Signature; this is used to verify that the token has not been changed. It is a hash of the header + payload + a secret key.
 
 ## Minimum Viable Product
 
