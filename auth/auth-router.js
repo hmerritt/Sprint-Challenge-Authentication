@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const db = require("../api/db");
 
 router.post("/register", validateBody(), async (req, res, next) => {
@@ -20,9 +21,24 @@ router.post("/register", validateBody(), async (req, res, next) => {
     }
 });
 
-router.post("/login", validateBody(), (req, res, next) => {
+router.post("/login", validateBody(), async (req, res, next) => {
     // Get user info
-    const { username, password } = req.body;
+    const user = req.body;
+
+    // Get user from db (by username)
+    const [dbUser] = await db.get("username", user.username);
+
+    // Compare password with one stored in db
+    if (dbUser && bcrypt.compareSync(user.password, dbUser.password)) {
+        // Create new JSON web token
+        const token = jwt.sign({username: user.username}, (process.env.JWT_SECRET || "sUpeR sEcret cOde"), {expiresIn: "1h"});
+
+        // Send username and JWT
+        res.send({ message: `Logged in: ${dbUser.username}`, token });
+    } else {
+        // Passwords did not match :(
+        res.status(401).json({ message: "You shall not pass!" });
+    }
 });
 
 // Validate required post data
