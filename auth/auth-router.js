@@ -31,7 +31,11 @@ router.post("/login", validateBody(), async (req, res, next) => {
     // Compare password with one stored in db
     if (dbUser && bcrypt.compareSync(user.password, dbUser.password)) {
         // Create new JSON web token
-        const token = jwt.sign({username: user.username}, (process.env.JWT_SECRET || "sUpeR sEcret cOde"), {expiresIn: "1h"});
+        const token = jwt.sign(
+            { username: user.username },
+            process.env.JWT_SECRET || "sUpeR sEcret cOde",
+            { expiresIn: "1h" }
+        );
 
         // Send username and JWT
         res.send({ message: `Logged in: ${dbUser.username}`, token });
